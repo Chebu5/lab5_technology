@@ -9,10 +9,10 @@ namespace lab5.Objects
 {
     class BaseObject
     {
-        public float X;//координаты объекта
+        public float X;
         public float Y;
         public float Angle;
-        public Action<BaseObject, BaseObject> OnOverlap; //пересечение объекта ссылка на метод
+        public Action<BaseObject> OnOverlap;
 
         public BaseObject(float x, float y, float angle)
         {
@@ -21,45 +21,42 @@ namespace lab5.Objects
             Angle = angle;
         }
 
-        public Matrix GetTransform() //матрица преобразования используется для перемещения, поворота и масштабирования объекта.
+        public Matrix GetTransform()
         {
-            var matrix = new Matrix(); //Matrix - это класс в .NET, который представляет матрицу 3x3, используемую для 2D-трансформаций.
-            matrix.Translate(X, Y); //операция перемещения
-            matrix.Rotate(Angle); //операция вращения
+            var matrix = new Matrix();
+            matrix.Translate(X, Y);
+            matrix.Rotate(Angle);
             return matrix;
         }
 
-        public virtual void Render(Graphics g) //рисуем объект на графическом контексте g
+        public virtual void Render(Graphics g)
         {
-            
+
         }
 
         public virtual GraphicsPath GetGraphicsPath()
         {
-           
-            return new GraphicsPath(); //графический путь объекта для определения формы объекта при проверке на пересечение
+            return new GraphicsPath();
         }
 
-        public virtual bool Overlaps(BaseObject obj, Graphics g) //возвращает или определяет было пересечение или нет
+        public  bool Overlaps(BaseObject obj, Graphics g)
         {
-           
             var path1 = this.GetGraphicsPath();
             var path2 = obj.GetGraphicsPath();
 
-      
-            path1.Transform(this.GetTransform()); //изменяем графический путь объекта в зависимости от параметров в матрице
+            path1.Transform(this.GetTransform());
             path2.Transform(obj.GetTransform());
 
-            var region = new Region(path1); //просто область занимаемая объектом
-            region.Intersect(path2); // пересекаем формы
-            return !region.IsEmpty(g); // если полученная форма не пуста то значит было пересечение
+            var region = new Region(path1);
+            region.Intersect(path2);
+            return !region.IsEmpty(g);
         }
 
-        public virtual void Overlap(BaseObject obj) //что произошло после столкновения
+        public virtual void Overlap(BaseObject obj)
         {
-            if (this.OnOverlap != null) // если к полю есть привязанные функции (подписчики на событие)
+            if (this.OnOverlap != null)
             {
-                this.OnOverlap(this, obj); // то вызываем их
+                this.OnOverlap(obj);
             }
         }
     }

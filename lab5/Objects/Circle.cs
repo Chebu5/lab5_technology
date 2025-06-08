@@ -12,9 +12,9 @@ namespace lab5.Objects
     class Circle : BaseObject
     {
         private Color color = Color.DarkBlue;
-        private float size = 40; // Начальный размер круга
-        public Action OnSizeZero; // Событие обнуления размера, Action может хранить ссылку на метод
-        public float Size //свойство размер
+        private float size = 40;
+        public Action OnSizeZero;
+        public float Size
         {
             get { return size; }
             set
@@ -23,7 +23,7 @@ namespace lab5.Objects
                 if (size <= 0)
                 {
                     size = 0;
-                    OnSizeZero?.Invoke(); // Генерируем событие
+                    OnSizeZero?.Invoke();
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace lab5.Objects
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(color), -Size / 2, -Size / 2, Size, Size); // -Size / 2, -Size / 2 - это координаты верхнего левого угла прямоугольника, в который вписан эллипс. Мы смещаем координаты на -Size / 2 по обеим осям, чтобы центр круга совпадал с координатой (X, Y), которая хранится в BaseObject. Size
+            g.FillEllipse(new SolidBrush(color), -Size / 2, -Size / 2, Size, Size);
             g.DrawEllipse(new Pen(Color.Black, 1), -Size / 2, -Size / 2, Size, Size);
         }
 

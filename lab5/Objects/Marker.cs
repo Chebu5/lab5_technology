@@ -16,17 +16,15 @@ namespace lab5.Objects
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6); //закрашенный эллипс
-            g.DrawEllipse(new Pen(Color.Red, 2), -6, -6, 12, 12); //контур эллипса
-            g.DrawLine(new Pen(Color.Red, 2), -10, -10, 20, 20); //линия
-
+            g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6);
+            g.DrawEllipse(new Pen(Color.Red, 2), -6, -6, 12, 12); 
         }
 
         public override GraphicsPath GetGraphicsPath()
         {
             var path = base.GetGraphicsPath();
             
-            path.AddEllipse(-3, -3, 6, 6); //добавляем эллипс в графический путь
+            path.AddEllipse(-3, -3, 6, 6);
             return path;
         }
     }
